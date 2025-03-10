@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% load static %}  {# Ensure static files are loaded #}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">  
+
+<div class="login-container">
+    <div class="login-form-wrapper">
+        <h2 class="login-title">Login</h2>
+
+        {% if form.errors %}
+            <div class="error-message">
+                <p>Invalid username or password. Please try again.</p>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" id="id_username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Login</button>
+        </form>
+
+        <div class="extra-links">
+            <p>Don't have an account? <a href="{% url 'users:register' %}">Register here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

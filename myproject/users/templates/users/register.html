@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% load static %}
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+{% block title %}
+Register a New User
+{% endblock title %}
+
+{% block content %}
+<div class="registration-container">
+  <div class="registration-form-wrapper">
+    <div class="icon-container">
+      <i class="fa fa-user-circle"></i>
+    </div>
+    
+    <h2>Register a New User</h2>
+    <form action="{% url 'users:register' %}" method="post" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="form-errors">
+              {% for error in field.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn-submit">Register</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
